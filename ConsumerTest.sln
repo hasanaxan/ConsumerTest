@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsumerSync", "ProducerSync\ConsumerSync.csproj", "{95BBB91F-8D9C-4D04-8D9B-FBC88497C665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsumerAsync", "ProducerAsync\ConsumerAsync.csproj", "{FB3426B7-AD15-452A-969C-9FA119930093}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95BBB91F-8D9C-4D04-8D9B-FBC88497C665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95BBB91F-8D9C-4D04-8D9B-FBC88497C665}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95BBB91F-8D9C-4D04-8D9B-FBC88497C665}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95BBB91F-8D9C-4D04-8D9B-FBC88497C665}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB3426B7-AD15-452A-969C-9FA119930093}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB3426B7-AD15-452A-969C-9FA119930093}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB3426B7-AD15-452A-969C-9FA119930093}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB3426B7-AD15-452A-969C-9FA119930093}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {049A5997-C314-49C6-8328-6C6FCA733913}
+	EndGlobalSection
+EndGlobal
