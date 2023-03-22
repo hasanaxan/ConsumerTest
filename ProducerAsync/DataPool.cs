@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsumerSync
+namespace ConsumerAsync
 {
     internal class DataPool
     {
@@ -16,9 +16,9 @@ namespace ConsumerSync
             Messages = new ConcurrentQueue<MessageObject>();
         }
 
-        public static void CreateMessages()
+        public static Task CreateMessages()
         {
-            new Thread(() =>
+            return Task.Factory.StartNew(() =>
             {
                 for (int i = 0; i < 10000; i++)
                 {
@@ -27,7 +27,9 @@ namespace ConsumerSync
                     message.CreateDate = DateTime.Now;
                     Messages.Enqueue(message);
                 }
-            }).Start();
+            });
+
+            
         }
     }
 }

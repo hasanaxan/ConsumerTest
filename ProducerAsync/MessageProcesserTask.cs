@@ -2,65 +2,70 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsumerSync
+namespace ConsumerAsync
 {
     internal class MessageProcesserTask
     {
-       
+
         private PerformanceCounter cpuCounter;
         private PerformanceCounter ramCounter;
         public MessageProcesserTask()
         {
+
+
             cpuCounter = new PerformanceCounter();
             cpuCounter.CategoryName = "Processor";
             cpuCounter.CounterName = "% Processor Time";
             cpuCounter.InstanceName = "_Total";
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
         }
-        public void Runner(int threadCount)
+        public Task Runner()
         {
-            for (int i = 0; i < threadCount; i++)
+            return Task.Factory.StartNew(() =>
             {
-                new Thread(() =>
-                {
-                    ConsomeMessage();
+                ConsomeMessage();
+            });
 
-                }).Start();
-            }
 
         }
 
         private void ConsomeMessage()
         {
+          
             while (true)
             {
                 MessageObject message;
-                //kuyruktan bir mesajı almayı dene
                 if (DataPool.Messages.TryPeek(out message))
                 {
                     message.QueedDate = DateTime.Now;
                     //mesajı kuyruktan kaldırmayı dene ve işle
                     if (DataPool.Messages.TryDequeue(out message))
                     {
-                        Test(message);  
+                        TestAsync(message);
+
                     }
+
+
+
                 }
 
             }
         }
-        private void Test(MessageObject message)
+
+        async Task TestAsync(MessageObject message)
         {
+
+
             var cpu = cpuCounter.NextValue();
             var ram = ramCounter.NextValue();
-            Thread.Sleep(10);
+            await Task.Delay(10);
             message.ProcessedDate = DateTime.Now;
-            DataAccess.InsertData(message, cpu, ram);
-         
+            DataAccess.InsertDataAsync(message, cpu, ram);
+            //Console.WriteLine("Consumed message {0},{3},{4} , QueedDate:{1}, ProcessedDate:{2}", message.Id, message.QueedDate, message.ProcessedDate, cpu, ram);
         }
-
-    
     }
 }
