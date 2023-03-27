@@ -12,6 +12,8 @@ Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına
  - MAX_ProcessedDate: En geç işlenen mesaj tarihi
  - TotalProcessedDuration: Mesaj kuyruğundaki verilen işlenmesi için geçen toplam süre
  - ProcessedMessageCount_PerSecond: 1 sn işlenen ortalama mesaj adeti
+ <p align="center"><img src="https://raw.githubusercontent.com/hasanaxan/ConsumerTest/master/consumer-mimari.png" alt="demo" width=80%></p>
+ 
 ## 🎉 1000 adet mesaj için
 
 | 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(%)	 | Ram(%)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
