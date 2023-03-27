@@ -1,5 +1,5 @@
 # Compare Thread&amp;Task
-
+Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına aktarılması arasına 10 ms bekleme süresi konulmuştur. Tablodaki tarih verileri runtime'da oluşturulan tarih verileridir. Mesajların veritabanına eklenme zamanları tabloya dahil edilmemiştir.
 ## 💎 Veri Açıklamaları
  - QueedDuration: Mesajın oluşturulduğu andan iş parçacığı güvenli mesaj listesine atılmasına kadar geçen ortalama süre.
  - ProcessedDuration: Mesasın listeye atılması ile işlenmesi arasında geçen süre.
