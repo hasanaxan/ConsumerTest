@@ -1,6 +1,6 @@
 # ConsumerTest
 Compare Thread&amp;Task
-## 💎 Veri Açıklamaları?
+## 💎 Veri Açıklamaları
  - QueedDuration: Mesajın oluşturulduğu andan iş parçacığı güvenli mesaj listesine atılmasına kadar geçen ortalama süre.
  - ProcessedDuration: Mesasın listeye atılması ile işlenmesi arasında geçen süre.
  - IsAsync: 0 için Thread, 1 için Task 
