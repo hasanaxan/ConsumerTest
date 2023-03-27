@@ -6,8 +6,13 @@
 //Console.WriteLine(DataPool.Messages.Count);
 
 using ConsumerAsync;
+Console.WriteLine("İşlemek istediğiniz mesaj adetini giriniz");
 
-DataPool.CreateMessages();
-new MessageProcesserTask().Runner();
+int messageCount = 0;
+if (int.TryParse(Console.ReadLine(), out messageCount))
+{
+    DataPool.CreateMessages(messageCount);
+    new MessageProcesserTask().Runner();
+}
 
 Console.Read();

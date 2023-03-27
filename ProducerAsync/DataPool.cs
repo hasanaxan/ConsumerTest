@@ -16,11 +16,11 @@ namespace ConsumerAsync
             Messages = new ConcurrentQueue<MessageObject>();
         }
 
-        public static Task CreateMessages()
+        public static Task CreateMessages(int messageCount)
         {
             return Task.Factory.StartNew(() =>
             {
-                for (int i = 0; i < 10000; i++)
+                for (int i = 0; i < messageCount; i++)
                 {
                     var message = new MessageObject();
                     message.Id = Guid.NewGuid();

@@ -16,11 +16,11 @@ namespace ConsumerSync
             Messages = new ConcurrentQueue<MessageObject>();
         }
 
-        public static void CreateMessages()
+        public static void CreateMessages(int messageCount)
         {
             new Thread(() =>
             {
-                for (int i = 0; i < 10000; i++)
+                for (int i = 0; i < messageCount; i++)
                 {
                     var message = new MessageObject();
                     message.Id = Guid.NewGuid();

@@ -21,7 +21,7 @@ namespace ConsumerAsync
             cpuCounter.CategoryName = "Processor";
             cpuCounter.CounterName = "% Processor Time";
             cpuCounter.InstanceName = "_Total";
-            ramCounter = new PerformanceCounter("Memory", "Available MBytes");
+            ramCounter = new PerformanceCounter("Memory", "Available MBytes",true);
         }
         public Task Runner()
         {
@@ -35,7 +35,7 @@ namespace ConsumerAsync
 
         private void ConsomeMessage()
         {
-          
+
             while (true)
             {
                 MessageObject message;
@@ -58,10 +58,13 @@ namespace ConsumerAsync
 
         async Task TestAsync(MessageObject message)
         {
-
-
-            var cpu = cpuCounter.NextValue();
-            var ram = ramCounter.NextValue();
+            float cpu = cpuCounter.NextValue();
+            while (cpu == 0)
+            {
+                cpu = cpuCounter.NextValue();
+            }
+            var totalRam = 8 * 1024;
+            var ram = ((totalRam - ramCounter.NextValue()) / totalRam)*100;
             await Task.Delay(10);
             message.ProcessedDate = DateTime.Now;
             DataAccess.InsertDataAsync(message, cpu, ram);

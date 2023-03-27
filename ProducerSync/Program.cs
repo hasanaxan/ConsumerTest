@@ -7,7 +7,13 @@
 
 using ConsumerSync;
 
-DataPool.CreateMessages();
+Console.WriteLine("İşlemek istediğiniz mesaj adetini giriniz");
 
-new MessageProcesserTask().Runner(1);
+int messageCount = 0;
+if(int.TryParse(Console.ReadLine(), out messageCount))
+{
+    DataPool.CreateMessages(messageCount);
+    new MessageProcesserTask().Runner(1);
+}
+
 Console.Read();

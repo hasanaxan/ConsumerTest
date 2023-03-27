@@ -9,7 +9,7 @@ namespace ConsumerSync
 {
     internal class MessageProcesserTask
     {
-       
+
         private PerformanceCounter cpuCounter;
         private PerformanceCounter ramCounter;
         public MessageProcesserTask()
@@ -45,7 +45,7 @@ namespace ConsumerSync
                     //mesajı kuyruktan kaldırmayı dene ve işle
                     if (DataPool.Messages.TryDequeue(out message))
                     {
-                        Test(message);  
+                        Test(message);
                     }
                 }
 
@@ -53,14 +53,19 @@ namespace ConsumerSync
         }
         private void Test(MessageObject message)
         {
-            var cpu = cpuCounter.NextValue();
-            var ram = ramCounter.NextValue();
+            float cpu = cpuCounter.NextValue();
+            while (cpu == 0)
+            {
+                cpu = cpuCounter.NextValue();
+            }
+            var totalRam = 8 * 1024;
+            var ram = ((totalRam - ramCounter.NextValue()) / totalRam) * 100;
             Thread.Sleep(10);
             message.ProcessedDate = DateTime.Now;
             DataAccess.InsertData(message, cpu, ram);
-         
+
         }
 
-    
+
     }
 }
