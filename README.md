@@ -1,5 +1,8 @@
 # Compare Thread&amp;Task
 Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına aktarılması arasına 10 ms bekleme süresi konulmuştur. Tablodaki tarih verileri runtime'da oluşturulan tarih verileridir. Mesajların veritabanına eklenme zamanları tabloya dahil edilmemiştir.
+## ✨ Mimari
+ <p align="center"><img src="https://raw.githubusercontent.com/hasanaxan/ConsumerTest/master/consumer-mimari.png" alt="demo" width=80%></p>
+
 ## 💎 Veri Açıklamaları
  - QueedDuration: Mesajın oluşturulduğu andan iş parçacığı güvenli mesaj listesine atılmasına kadar geçen ortalama süre.
  - ProcessedDuration: Mesasın listeye atılması ile işlenmesi arasında geçen süre.
@@ -12,7 +15,6 @@ Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına
  - MAX_ProcessedDate: En geç işlenen mesaj tarihi
  - TotalProcessedDuration: Mesaj kuyruğundaki verilen işlenmesi için geçen toplam süre
  - ProcessedMessageCount_PerSecond: 1 sn işlenen ortalama mesaj adeti
- <p align="center"><img src="https://raw.githubusercontent.com/hasanaxan/ConsumerTest/master/consumer-mimari.png" alt="demo" width=80%></p>
  
 ## 🎉 1000 adet mesaj için
 
