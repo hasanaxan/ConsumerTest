@@ -7,6 +7,6 @@ Console.WriteLine("İşlemek istediğiniz mesaj adetini giriniz");
 if (int.TryParse(Console.ReadLine(), out int messageCount))
 {
     DataPool.CreateMessages(messageCount);
-    new MessageProcesserTask().Runner(1);
+    new MessageProcesser().Runner(1);
 }
 Console.Read();

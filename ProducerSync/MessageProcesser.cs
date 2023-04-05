@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ConsumerSync
 {
-    internal class MessageProcesserTask
+    internal class MessageProcesser
     {
         private readonly PerformanceCounter cpuCounter;
         private readonly PerformanceCounter ramCounter;
-        public MessageProcesserTask()
+        public MessageProcesser()
         {
             cpuCounter = new PerformanceCounter
             {
