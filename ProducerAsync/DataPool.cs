@@ -13,7 +13,7 @@ namespace ConsumerAsync
         {
             Messages = new ConcurrentQueue<MessageObject>();
         }
-        public static Task CreateMessages(int messageCount)
+        public static Task CreateMessagesAsync(int messageCount)
         {
             return Task.Factory.StartNew(() =>
             {

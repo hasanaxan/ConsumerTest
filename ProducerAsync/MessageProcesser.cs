@@ -21,7 +21,7 @@ namespace ConsumerAsync
             };
             ramCounter = new PerformanceCounter("Memory", "Available MBytes",true);
         }
-        public Task Runner()
+        public Task RunnerAsync()
         {
             return Task.Factory.StartNew(() =>
             {
