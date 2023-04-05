@@ -20,15 +20,12 @@ namespace ConsumerSync
             };
             ramCounter = new PerformanceCounter("Memory", "Available MBytes");
         }
-        public void Runner(int threadCount)
+        public void Runner()
         {
-            for (int i = 0; i < threadCount; i++)
-            {
                 new Thread(() =>
                 {
                     ConsomeMessage();
                 }).Start();
-            }
         }
         private void ConsomeMessage()
         {
