@@ -24,18 +24,16 @@ namespace ConsumerSync
         {
                 new Thread(() =>
                 {
-                    ConsomeMessage();
+                    ConsumeMessage();
                 }).Start();
         }
-        private void ConsomeMessage()
+        private void ConsumeMessage()
         {
             while (true)
             {
-                //kuyruktan bir mesajı almayı dene
                 if (DataPool.Messages.TryPeek(out MessageObject message))
                 {
                     message.QueedDate = DateTime.Now;
-                    //mesajı kuyruktan kaldırmayı dene ve işle
                     if (DataPool.Messages.TryDequeue(out message))
                     {
                         ProcessMessage(message);

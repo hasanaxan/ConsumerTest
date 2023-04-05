@@ -25,17 +25,16 @@ namespace ConsumerAsync
         {
             return Task.Factory.StartNew(() =>
             {
-                ConsomeMessage();
+                ConsumeMessage();
             });
         }
-        private void ConsomeMessage()
+        private void ConsumeMessage()
         {
             while (true)
             {
                 if (DataPool.Messages.TryPeek(out MessageObject message))
                 {
                     message.QueedDate = DateTime.Now;
-                    //mesajı kuyruktan kaldırmayı dene ve işle
                     if (DataPool.Messages.TryDequeue(out message))
                     {
                         ProcessMessageAsync(message);
@@ -55,7 +54,6 @@ namespace ConsumerAsync
             await Task.Delay(10);
             message.ProcessedDate = DateTime.Now;
             DataAccess.InsertDataAsync(message, cpu, ram);
-            //Console.WriteLine("Consumed message {0},{3},{4} , QueedDate:{1}, ProcessedDate:{2}", message.Id, message.QueedDate, message.ProcessedDate, cpu, ram);
         }
     }
 }
