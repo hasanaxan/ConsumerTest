@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ConsumerAsync
 {
     internal class DataAccess
@@ -14,20 +13,13 @@ namespace ConsumerAsync
         private const string connectionString = "Server=.\\SQLEXPRESS;Database=Test;Trusted_Connection=True;Max Pool Size=131072;Pooling=true;";
         public static async Task<int> InsertDataAsync(MessageObject message, float cpu, float ram)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                DbCommand dbCommand = CreateCommandQuery(connection, message, cpu, ram, true);
-
-                var result = await dbCommand.ExecuteNonQueryAsync();
-                connection.Close();
-
-                return result;
-
-            }
+            using SqlConnection connection = new(connectionString);
+            connection.Open();
+            DbCommand dbCommand = CreateCommandQuery(connection, message, cpu, ram, true);
+            var result = await dbCommand.ExecuteNonQueryAsync();
+            connection.Close();
+            return result;
         }
-
-
         private static DbCommand CreateCommandQuery(SqlConnection connection, MessageObject message, float cpu, float ram, bool isAsync)
         {
             DbCommand dbCommand = connection.CreateCommand();
@@ -40,7 +32,6 @@ namespace ConsumerAsync
             AddParameter(dbCommand, "@IsAsync", isAsync);
             return dbCommand;
         }
-
         private static void AddParameter(DbCommand dbCommand, string parameterName, object? value)
         {
             var parameter = dbCommand.CreateParameter();
@@ -48,8 +39,5 @@ namespace ConsumerAsync
             parameter.Value = value;
             dbCommand.Parameters.Add(parameter);
         }
-
     }
-
-
 }

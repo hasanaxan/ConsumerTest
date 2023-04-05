@@ -5,22 +5,20 @@ using System.Linq;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace ConsumerAsync
 {
     internal class MessageProcesserTask
     {
-
-        private PerformanceCounter cpuCounter;
-        private PerformanceCounter ramCounter;
+        private readonly PerformanceCounter cpuCounter;
+        private readonly PerformanceCounter ramCounter;
         public MessageProcesserTask()
         {
-
-
-            cpuCounter = new PerformanceCounter();
-            cpuCounter.CategoryName = "Processor";
-            cpuCounter.CounterName = "% Processor Time";
-            cpuCounter.InstanceName = "_Total";
+            cpuCounter = new PerformanceCounter
+            {
+                CategoryName = "Processor",
+                CounterName = "% Processor Time",
+                InstanceName = "_Total"
+            };
             ramCounter = new PerformanceCounter("Memory", "Available MBytes",true);
         }
         public Task Runner()
@@ -29,34 +27,23 @@ namespace ConsumerAsync
             {
                 ConsomeMessage();
             });
-
-
         }
-
         private void ConsomeMessage()
         {
-
             while (true)
             {
-                MessageObject message;
-                if (DataPool.Messages.TryPeek(out message))
+                if (DataPool.Messages.TryPeek(out MessageObject message))
                 {
                     message.QueedDate = DateTime.Now;
                     //mesajı kuyruktan kaldırmayı dene ve işle
                     if (DataPool.Messages.TryDequeue(out message))
                     {
-                        TestAsync(message);
-
+                        ProcessMessageAsync(message);
                     }
-
-
-
                 }
-
             }
         }
-
-        async Task TestAsync(MessageObject message)
+        async Task ProcessMessageAsync(MessageObject message)
         {
             float cpu = cpuCounter.NextValue();
             while (cpu == 0)
