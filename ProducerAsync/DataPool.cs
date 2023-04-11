@@ -8,26 +8,28 @@ namespace ConsumerAsync
 {
     internal class DataPool
     {
-        public static ConcurrentQueue<MessageObject> Messages { get; private set; }
+        //public static ConcurrentQueue<MessageObject> Messages { get; private set; }
+        public static MyQueue<MessageObject> Messages { get; private set; }
         static DataPool()
         {
-            Messages = new ConcurrentQueue<MessageObject>();
+            Messages = new();
         }
-        public static Task CreateMessagesAsync(int messageCount)
+        public static async Task CreateMessagesAsync(int messageCount)
         {
-            return Task.Factory.StartNew(() =>
+            await Task.Factory.StartNew(() =>
             {
                 for (int i = 0; i < messageCount; i++)
                 {
                     var message = new MessageObject
                     {
                         Id = Guid.NewGuid(),
-                        CreateDate = DateTime.Now
+                        CreateDate = DateTime.Now,
+                        MessageGroup=messageCount
                     };
                     Messages.Enqueue(message);
                 }
             });
-            
+
         }
     }
 }

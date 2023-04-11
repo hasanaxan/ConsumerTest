@@ -23,5 +23,8 @@ namespace ConsumerAsync
         /// Mesajın işlenme tarihi
         /// </summary>
         public DateTime ProcessedDate { get; set; }
+
+        //1000, 5000 ,10000 binlik mesaj adeti gruplama
+        public int MessageGroup { get; set; }
     }
 }

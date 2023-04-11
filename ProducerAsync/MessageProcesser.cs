@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.PerformanceData;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,51 +12,43 @@ namespace ConsumerAsync
 {
     internal class MessageProcesser
     {
-        private readonly PerformanceCounter cpuCounter;
-        private readonly PerformanceCounter ramCounter;
-        public MessageProcesser()
+     
+        public void RunnerAsync()
         {
-            cpuCounter = new PerformanceCounter
-            {
-                CategoryName = "Processor",
-                CounterName = "% Processor Time",
-                InstanceName = "_Total"
-            };
-            ramCounter = new PerformanceCounter("Memory", "Available MBytes",true);
+            
+           DataPool.Messages.Changed += Messages_Changed;
+           
         }
-        public Task RunnerAsync()
+
+        private void Messages_Changed(object? sender, MessageObject message)
         {
-            return Task.Factory.StartNew(() =>
+            message.QueedDate = DateTime.Now;
+            if (DataPool.Messages.TryDequeue(out message))
             {
-                ConsumeMessage();
-            });
-        }
-        private void ConsumeMessage()
-        {
-            while (true)
-            {
-                if (DataPool.Messages.TryPeek(out MessageObject message))
-                {
-                    message.QueedDate = DateTime.Now;
-                    if (DataPool.Messages.TryDequeue(out message))
-                    {
-                        ProcessMessageAsync(message);
-                    }
-                }
+                ProcessMessageAsync(message);
             }
         }
+
         async Task ProcessMessageAsync(MessageObject message)
         {
-            float cpu = cpuCounter.NextValue();
-            while (cpu == 0)
-            {
-                cpu = cpuCounter.NextValue();
-            }
-            var totalRam = 8 * 1024;
-            var ram = ((totalRam - ramCounter.NextValue()) / totalRam)*100;
+            var cpuRamUsage = GetCpuAndRamUsageForProcess();
             await Task.Delay(10);
             message.ProcessedDate = DateTime.Now;
-            DataAccess.InsertDataAsync(message, cpu, ram);
+            await DataAccess.InsertDataAsync(message, cpuRamUsage.Item1, cpuRamUsage.Item2);
+        }
+
+        private Tuple<double, double> GetCpuAndRamUsageForProcess()
+        {
+            var startTime = DateTime.UtcNow;
+            var proc = Process.GetCurrentProcess();
+            var startCpuUsage = proc.TotalProcessorTime;
+            var endTime = DateTime.UtcNow;
+            var endCpuUsage = proc.TotalProcessorTime;
+            var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
+            var totalMsPassed = (endTime - startTime).TotalMilliseconds;
+            var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
+            var ram = proc.WorkingSet64 / 1024.0 / 1024.0;
+            return Tuple.Create(cpuUsageTotal * 100, ram);
         }
     }
 }

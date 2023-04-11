@@ -22,37 +22,51 @@ namespace ConsumerSync
         }
         public void Runner()
         {
-                new Thread(() =>
-                {
-                    ConsumeMessage();
-                }).Start();
+            DataPool.Messages.Changed += Messages_Changed;
         }
-        private void ConsumeMessage()
+
+        private void Messages_Changed(object? sender, MessageObject message)
         {
-            while (true)
+            message.QueedDate = DateTime.Now;
+            if (DataPool.Messages.TryDequeue(out message))
             {
-                if (DataPool.Messages.TryPeek(out MessageObject message))
-                {
-                    message.QueedDate = DateTime.Now;
-                    if (DataPool.Messages.TryDequeue(out message))
-                    {
-                        ProcessMessage(message);
-                    }
-                }
+                ProcessMessage(message);
             }
         }
+        //private void ConsumeMessage()
+        //{
+        //    while (true)
+        //    {
+        //        if (DataPool.Messages.TryPeek(out MessageObject message))
+        //        {
+        //            message.QueedDate = DateTime.Now;
+        //            if (DataPool.Messages.TryDequeue(out message))
+        //            {
+        //                ProcessMessage(message);
+        //            }
+        //        }
+        //    }
+        //}
         private void ProcessMessage(MessageObject message)
         {
-            float cpu = cpuCounter.NextValue();
-            while (cpu == 0)
-            {
-                cpu = cpuCounter.NextValue();
-            }
-            var totalRam = 8 * 1024;
-            var ram = ((totalRam - ramCounter.NextValue()) / totalRam) * 100;
+            var cpuRamUsage = GetCpuAndRamUsageForProcess();
             Thread.Sleep(10);
             message.ProcessedDate = DateTime.Now;
-            DataAccess.InsertData(message, cpu, ram);
+            DataAccess.InsertData(message, cpuRamUsage.Item1, cpuRamUsage.Item2);
+        }
+
+        private Tuple<double, double> GetCpuAndRamUsageForProcess()
+        {
+            var startTime = DateTime.UtcNow;
+            var proc = Process.GetCurrentProcess();
+            var startCpuUsage = proc.TotalProcessorTime;
+            var endTime = DateTime.UtcNow;
+            var endCpuUsage = proc.TotalProcessorTime;
+            var cpuUsedMs = (endCpuUsage - startCpuUsage).TotalMilliseconds;
+            var totalMsPassed = (endTime - startTime).TotalMilliseconds;
+            var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
+            var ram = proc.WorkingSet64 / 1024.0 / 1024.0;
+            return Tuple.Create(cpuUsageTotal * 100, ram);
         }
     }
 }

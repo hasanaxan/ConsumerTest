@@ -8,10 +8,11 @@ namespace ConsumerSync
 {
     internal class DataPool
     {
-        public static ConcurrentQueue<MessageObject> Messages { get; private set; }
+        //public static ConcurrentQueue<MessageObject> Messages { get; private set; }
+        public static MyQueue<MessageObject> Messages { get; private set; }
         static DataPool()
         {
-            Messages = new ConcurrentQueue<MessageObject>();
+            Messages = new();
         }
         public static void CreateMessages(int messageCount)
         {
@@ -22,7 +23,8 @@ namespace ConsumerSync
                     MessageObject message = new()
                     {
                         Id = Guid.NewGuid(),
-                        CreateDate = DateTime.Now
+                        CreateDate = DateTime.Now,
+                        MessageGroup = messageCount
                     };
                     Messages.Enqueue(message);
                 }
