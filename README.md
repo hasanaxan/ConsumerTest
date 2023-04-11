@@ -20,8 +20,8 @@ Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına
 
 | 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(%)	 | Ram(%)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
 | 	:-----:	 | 	:-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 |	
-|12|0|62.1097|86.053|0|2023-03-27 22:09:50|2023-03-27 22:09:50|2023-03-27 22:09:54|2023-03-27 22:10:11|2023-03-27 22:09:54|	2023-03-27 22:10:11|17|58|
-|2|1|100|85.7067|1|2023-03-27 22:10:30|2023-03-27 22:10:30|2023-03-27 22:10:32|2023-03-27 22:10:33|2023-03-27 22:10:32|	2023-03-27 22:10:36|4|250|
+|0|0|0|50.7512|0|2023-04-11 12:29:16|2023-04-11 12:29:34|2023-04-11 12:29:16|2023-04-11 12:29:34|2023-04-11 12:29:16|	2023-04-11 12:29:34|18|55|
+|0|3|0|41.2199|1|2023-04-11 12:24:35|2023-04-11 12:24:43|2023-04-11 12:24:35|2023-04-11 12:24:43|2023-04-11 12:24:37|	2023-04-11 12:24:45|8|125|
 											
 ## 🎉 5000 adet mesaj için
 | 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(%)	 | Ram(%)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
