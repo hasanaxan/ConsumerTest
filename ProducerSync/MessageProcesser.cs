@@ -8,18 +8,6 @@ namespace ConsumerSync
 {
     internal class MessageProcesser
     {
-        private readonly PerformanceCounter cpuCounter;
-        private readonly PerformanceCounter ramCounter;
-        public MessageProcesser()
-        {
-            cpuCounter = new PerformanceCounter
-            {
-                CategoryName = "Processor",
-                CounterName = "% Processor Time",
-                InstanceName = "_Total"
-            };
-            ramCounter = new PerformanceCounter("Memory", "Available MBytes");
-        }
         public void Runner()
         {
             DataPool.Messages.Changed += Messages_Changed;
@@ -27,26 +15,16 @@ namespace ConsumerSync
 
         private void Messages_Changed(object? sender, MessageObject message)
         {
-            message.QueedDate = DateTime.Now;
-            if (DataPool.Messages.TryDequeue(out message))
+            new Thread(() =>
             {
-                ProcessMessage(message);
-            }
+                message.QueedDate = DateTime.Now;
+                if (DataPool.Messages.TryDequeue(out message))
+                {
+                    ProcessMessage(message);
+                }
+            }).Start();
+            
         }
-        //private void ConsumeMessage()
-        //{
-        //    while (true)
-        //    {
-        //        if (DataPool.Messages.TryPeek(out MessageObject message))
-        //        {
-        //            message.QueedDate = DateTime.Now;
-        //            if (DataPool.Messages.TryDequeue(out message))
-        //            {
-        //                ProcessMessage(message);
-        //            }
-        //        }
-        //    }
-        //}
         private void ProcessMessage(MessageObject message)
         {
             var cpuRamUsage = GetCpuAndRamUsageForProcess();
