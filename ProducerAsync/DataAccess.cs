@@ -23,11 +23,12 @@ namespace ConsumerAsync
         private static DbCommand CreateCommandQuery(SqlConnection connection, MessageObject message, double cpu, double ram, bool isAsync)
         {
             DbCommand dbCommand = connection.CreateCommand();
-            dbCommand.CommandText = "insert into Messages(CreateDate,QueedDate,ProcessedDate,Cpu,Ram,IsAsync,MessageGroup) VALUES(@CreateDate,@QueedDate,@ProcessedDate,@Cpu,@Ram,@IsAsync,@MessageGroup)";
+            dbCommand.CommandText = "insert into Messages(CreateDate,QueedDate,ProcessedDate,Cpu,Ram,IsAsync,MessageGroup,MessageOrder) VALUES(@CreateDate,@QueedDate,@ProcessedDate,@Cpu,@Ram,@IsAsync,@MessageGroup,@MessageOrder)";
             AddParameter(dbCommand, "@CreateDate", message.CreateDate);
             AddParameter(dbCommand, "@QueedDate", message.QueedDate);
             AddParameter(dbCommand, "@ProcessedDate", message.ProcessedDate);
             AddParameter(dbCommand, "@MessageGroup", message.MessageGroup);
+            AddParameter(dbCommand, "@MessageOrder", message.MessageOrder);
             AddParameter(dbCommand, "@Cpu", cpu);
             AddParameter(dbCommand, "@Ram", ram);
             AddParameter(dbCommand, "@IsAsync", isAsync);

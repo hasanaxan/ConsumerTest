@@ -25,5 +25,9 @@ namespace ConsumerSync
         public DateTime ProcessedDate { get; set; }
         //1000, 5000 ,10000 binlik mesaj adeti gruplama
         public int MessageGroup { get; set; }
+        /// <summary>
+        /// Mesajın çalışma kuyruğua gönderilirken belirlenen sırası
+        /// </summary>
+        public int MessageOrder { get; set; }
     }
 }

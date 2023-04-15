@@ -24,7 +24,8 @@ namespace ConsumerAsync
                     {
                         Id = Guid.NewGuid(),
                         CreateDate = DateTime.Now,
-                        MessageGroup=messageCount
+                        MessageGroup=messageCount,
+                        MessageOrder = i + 1
                     };
                     Messages.Enqueue(message);
                 }
