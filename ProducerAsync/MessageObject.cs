@@ -23,12 +23,31 @@ namespace ConsumerAsync
         /// Mesajın işlenme tarihi
         /// </summary>
         public DateTime ProcessedDate { get; set; }
-
         //1000, 5000 ,10000 binlik mesaj adeti gruplama
         public int MessageGroup { get; set; }
         /// <summary>
         /// Mesajın çalışma kuyruğua gönderilirken belirlenen sırası
         /// </summary>
         public int MessageOrder { get; set; }
+
+        /// <summary>
+        /// Cpu kullanım süresi ms
+        /// </summary>
+        public double Cpu { get; set; }
+
+        /// <summary>
+        /// Ram kullanımı Mb
+        /// </summary>
+        public double Ram { get; set; }
+
+        /// <summary>
+        /// Asenkron mu
+        /// </summary>
+        public bool IsAsync { get; set; }
+
+        /// <summary>
+        /// Paralel veri işleme yapılıyor mu?
+        /// </summary>
+        public bool IsParallel { get; set; }
     }
 }

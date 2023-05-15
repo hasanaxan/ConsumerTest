@@ -11,36 +11,37 @@ namespace ConsumerSync
     internal class DataAccess
     {
         private const string connectionString = "Server=.\\SQLEXPRESS;Database=Test;Trusted_Connection=True;Max Pool Size=131072;Pooling=true;";
-        public static async Task<int> InsertDataAsync(MessageObject message, double cpu, double ram)
+        public static async Task<int> InsertDataAsync(MessageObject message)
         {
             using SqlConnection connection = new(connectionString);
             connection.Open();
-            DbCommand dbCommand = CreateCommandQuery(connection, message, cpu, ram, true);
+            DbCommand dbCommand = CreateCommandQuery(connection, message);
             var result = await dbCommand.ExecuteNonQueryAsync();
             connection.Close();
             return result;
         }
-        public static int InsertData(MessageObject message, double cpu, double ram)
+        public static int InsertData(MessageObject message)
         {
             using SqlConnection connection = new(connectionString);
             connection.Open();
-            DbCommand dbCommand = CreateCommandQuery(connection, message, cpu, ram, false);
+            DbCommand dbCommand = CreateCommandQuery(connection, message);
             var result = dbCommand.ExecuteNonQuery();
             connection.Close();
             return result;
         }
-        private static DbCommand CreateCommandQuery(SqlConnection connection, MessageObject message, double cpu, double ram, bool isAsync)
+        private static DbCommand CreateCommandQuery(SqlConnection connection, MessageObject message)
         {
             DbCommand dbCommand = connection.CreateCommand();
-            dbCommand.CommandText = "insert into Messages(CreateDate,QueedDate,ProcessedDate,Cpu,Ram,IsAsync,MessageGroup,MessageOrder) VALUES(@CreateDate,@QueedDate,@ProcessedDate,@Cpu,@Ram,@IsAsync,@MessageGroup,@MessageOrder)";
+            dbCommand.CommandText = "insert into Messages(CreateDate,QueedDate,ProcessedDate,Cpu,Ram,MessageGroup,MessageOrder,IsAsync,IsParallel) VALUES(@CreateDate,@QueedDate,@ProcessedDate,@Cpu,@Ram,@MessageGroup,@MessageOrder,@IsAsync,@IsParallel)";
             AddParameter(dbCommand, "@CreateDate", message.CreateDate);
             AddParameter(dbCommand, "@QueedDate", message.QueedDate);
             AddParameter(dbCommand, "@ProcessedDate", message.ProcessedDate);
             AddParameter(dbCommand, "@MessageGroup", message.MessageGroup);
             AddParameter(dbCommand, "@MessageOrder", message.MessageOrder);
-            AddParameter(dbCommand, "@Cpu", cpu);
-            AddParameter(dbCommand, "@Ram", ram);
-            AddParameter(dbCommand, "@IsAsync", isAsync);
+            AddParameter(dbCommand, "@Cpu", message.Cpu);
+            AddParameter(dbCommand, "@Ram", message.Ram);
+            AddParameter(dbCommand, "@IsAsync", message.IsAsync);
+            AddParameter(dbCommand, "@IsParallel", message.IsParallel);
             return dbCommand;
         }
         private static void AddParameter(DbCommand dbCommand, string parameterName, object? value)

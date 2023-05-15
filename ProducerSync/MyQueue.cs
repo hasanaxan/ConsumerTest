@@ -14,7 +14,6 @@ namespace ConsumerSync
         public event EventHandler<T>? Changed;
 
 
-
         protected void OnChanged(T item)
         {
             if (Changed is not null) Changed(this, item);

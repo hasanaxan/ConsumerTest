@@ -15,29 +15,44 @@ namespace ConsumerAsync
      
         public void RunnerAsync()
         {
-            
-           DataPool.Messages.Changed += Messages_Changed;
-           
-        }
 
-        private void Messages_Changed(object? sender, MessageObject message)
-        {
-            message.QueedDate = DateTime.Now;
-            if (DataPool.Messages.TryDequeue(out message))
+            MessageObject message;
+            while (DataPool.Messages.TryPeek(out message))
             {
-                ProcessMessageAsync(message);
+                message.QueedDate = DateTime.Now;
+                if (DataPool.Messages.TryDequeue(out message))
+                {
+                    ProcessMessageAsync(message,false,true);
+                }
             }
+
+        }
+        public void ParallelRunnerAsync()
+        {
+            Parallel.ForEach(DataPool.Messages, new ParallelOptions { MaxDegreeOfParallelism = DataPool.Messages.Count },
+            message =>
+            {
+
+                if (DataPool.Messages.TryDequeue(out message))
+                {
+                    message.QueedDate = DateTime.Now;
+                    ProcessMessageAsync(message, true, true);
+                }
+            });
         }
 
-        async Task ProcessMessageAsync(MessageObject message)
+
+        async Task ProcessMessageAsync(MessageObject message, bool isParallel, bool isAsync)
         {
-            var cpuRamUsage = GetCpuAndRamUsageForProcess();
+           setCpuAndRamUsageForProcess(message);
+            message.IsParallel = isParallel;
+            message.IsAsync = isAsync;
             await Task.Delay(10);
             message.ProcessedDate = DateTime.Now;
-            await DataAccess.InsertDataAsync(message, cpuRamUsage.Item1, cpuRamUsage.Item2);
+            await DataAccess.InsertDataAsync(message);
         }
 
-        private Tuple<double, double> GetCpuAndRamUsageForProcess()
+        private void setCpuAndRamUsageForProcess(MessageObject message)
         {
             var startTime = DateTime.UtcNow;
             var proc = Process.GetCurrentProcess();
@@ -48,7 +63,9 @@ namespace ConsumerAsync
             var totalMsPassed = (endTime - startTime).TotalMilliseconds;
             var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
             var ram = proc.WorkingSet64 / 1024.0 / 1024.0;
-            return Tuple.Create(cpuUsageTotal * 100, ram);
+            message.Ram = ram;
+            message.Cpu = cpuUsageTotal * 100;
+            //return Tuple.Create(cpuUsageTotal * 100, ram);
         }
     }
 }

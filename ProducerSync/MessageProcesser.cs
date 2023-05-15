@@ -10,30 +10,43 @@ namespace ConsumerSync
     {
         public void Runner()
         {
-            DataPool.Messages.Changed += Messages_Changed;
-        }
-
-        private void Messages_Changed(object? sender, MessageObject message)
-        {
-            new Thread(() =>
+            MessageObject message;
+            while (DataPool.Messages.TryPeek(out message))
             {
                 message.QueedDate = DateTime.Now;
                 if (DataPool.Messages.TryDequeue(out message))
                 {
-                    ProcessMessage(message);
+                    ProcessMessage(message,false, false);
                 }
-            }).Start();
-            
+            }
+
         }
-        private void ProcessMessage(MessageObject message)
+        public void ParallelRunner()
         {
-            var cpuRamUsage = GetCpuAndRamUsageForProcess();
-            Thread.Sleep(10);
-            message.ProcessedDate = DateTime.Now;
-            DataAccess.InsertData(message, cpuRamUsage.Item1, cpuRamUsage.Item2);
+            Parallel.ForEach(DataPool.Messages, new ParallelOptions { MaxDegreeOfParallelism = DataPool.Messages.Count },
+            message =>
+            {
+
+                if (DataPool.Messages.TryDequeue(out message))
+                {
+                    message.QueedDate = DateTime.Now;
+                    ProcessMessage(message,true,false);
+                }
+            });
         }
 
-        private Tuple<double, double> GetCpuAndRamUsageForProcess()
+       
+        private void ProcessMessage(MessageObject message,bool isParallel,bool isAsync)
+        {
+            setCpuAndRamUsageForProcess(message);
+            message.IsParallel = isParallel;
+            message.IsAsync = isAsync;
+            Thread.Sleep(10);
+            message.ProcessedDate = DateTime.Now;
+            DataAccess.InsertData(message);
+        }
+
+        private void setCpuAndRamUsageForProcess(MessageObject message)
         {
             var startTime = DateTime.UtcNow;
             var proc = Process.GetCurrentProcess();
@@ -44,7 +57,9 @@ namespace ConsumerSync
             var totalMsPassed = (endTime - startTime).TotalMilliseconds;
             var cpuUsageTotal = cpuUsedMs / (Environment.ProcessorCount * totalMsPassed);
             var ram = proc.WorkingSet64 / 1024.0 / 1024.0;
-            return Tuple.Create(cpuUsageTotal * 100, ram);
+            message.Ram = ram;
+            message.Cpu = cpuUsageTotal * 100;
+            //return Tuple.Create(cpuUsageTotal * 100, ram);
         }
     }
 }
