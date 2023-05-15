@@ -18,19 +18,19 @@ Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına
  
 ## 🎉 1000 adet mesaj için
 
-| 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(%)	 | Ram(%)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
+| 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(msn)	 | Ram(MB)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
 | 	:-----:	 | 	:-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 |	
-|12|0|62.1097|86.053|0|2023-03-27 22:09:50|2023-03-27 22:09:50|2023-03-27 22:09:54|2023-03-27 22:10:11|2023-03-27 22:09:54|	2023-03-27 22:10:11|17|58|
-|2|1|100|85.7067|1|2023-03-27 22:10:30|2023-03-27 22:10:30|2023-03-27 22:10:32|2023-03-27 22:10:33|2023-03-27 22:10:32|	2023-03-27 22:10:36|4|250|
+|0|0|6.04478|47.7959|0|2023-04-15 22:42:52|2023-04-15 22:43:05|2023-04-15 22:42:52|2023-04-15 22:43:05|2023-04-15 22:42:53|	2023-04-15 22:43:05|12|83|
+|0|2|2.33907|43.5562|1|2023-04-15 22:50:28|2023-04-15 22:50:33|2023-04-15 22:50:28|2023-04-15 22:50:33|2023-04-15 22:50:28|	2023-04-15 22:50:34|6|166|
 											
 ## 🎉 5000 adet mesaj için
-| 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(%)	 | Ram(%)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
+| 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(msn)	 | Ram(MB)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
 | 	:-----:	 | 	:-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 |	
-|43|0|54.6043|89.8958|0|2023-03-27 22:47:58|2023-03-27 22:47:58|2023-03-27 22:47:59|2023-03-27 22:49:21|2023-03-27 22:47:59|	2023-03-27 22:49:21|82|60|
-|5|6|99.9167|89.8562|1|2023-03-27 22:47:24|2023-03-27 22:47:24|2023-03-27 22:47:26|2023-03-27 22:47:33|2023-03-27 22:47:26|	2023-03-27 22:47:45|19|263|
+|0|0|30.2051|44.5147|0|2023-04-15 23:05:37|2023-04-15 23:06:22|2023-04-15 23:05:37|2023-04-15 23:06:22|2023-04-15 23:05:37|	2023-04-15 23:06:22|45|111|
+|0|0|16.0311|60.072|1|2023-04-15 23:04:56|2023-04-15 23:05:11|2023-04-15 23:04:56|2023-04-15 23:05:11|2023-04-15 23:04:56|	2023-04-15 23:05:11|15|333|
 
 ## 🎉 10000 adet mesaj için
-| 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(%)	 | Ram(%)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
+| 	QueedDuration(sn)	 | 	ProcessedDuration(sn)	 | 	Cpu(msn)	 | Ram(MB)	 | IsAsync	 | MIN_CreateDate	 | MAX_CreateDate	 | MIN_QueedDate	 | MAX_QueedDate	 | MIN_ProcessedDate	 | MAX_ProcessedDate	 | TotalProcessedDuration(sn)	 | ProcessedMessageCount_PerSecond	 |
 | 	:-----:	 | 	:-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 | :-----:	 | 	:-----:	 |	
-|83|0|55.4894|89.8175|0|2023-03-27 22:52:27|2023-03-27 22:52:28|2023-03-27 22:52:29|2023-03-27 22:55:12|2023-03-27 22:52:29|	2023-03-27 22:55:12|163|61|
-|7|9|99.9854|91.2392|1|2023-03-27 22:55:40|2023-03-27 22:55:40|2023-03-27 22:55:41|2023-03-27 22:55:54|2023-03-27 22:55:41|	2023-03-27 22:56:11|30|333|
+|0|0|36.6518|44.1463|0|2023-04-15 23:09:14|2023-04-15 23:10:42|2023-04-15 23:09:14|2023-04-15 23:10:42|2023-04-15 23:09:14|	2023-04-15 23:10:42|88|113|
+|0|0|18.2937|70.0385|1|2023-04-15 23:11:59|2023-04-15 23:12:29|2023-04-15 23:11:59|2023-04-15 23:12:29|2023-04-15 23:11:59|	2023-04-15 23:12:29|30|333|
