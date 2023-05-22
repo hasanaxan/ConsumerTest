@@ -6,7 +6,8 @@ Veriler oluşturulurken iş parçacığının veriyi işlemesi ile veritabanına
 ## 💎 Veri Açıklamaları
  - ThreadCountAvg: Ortalama iş parçacığı sayısı.
  - ProcessedDuration: Mesasın listeye atılması ile işlenmesi arasında geçen süre.
- - IsAsync: 0 için Thread, 1 için Task 
+ - IsAsync: 1 için Asenkron, 0 için senkron 
+ - IsParallel: 1 için Paralel, 0 için değil 
  - MIN_CreateDate: En erken oluşturulan mesajın tarihi
  - MAX_CreateDate: En geç oluşturulan mesajın tarihi
  - MIN_QueedDate: Mesajın en erken kuyruğa atılma tarihi
